@@ -20,15 +20,13 @@ allTables = [ [[x1, True, x2, x3, False],
                [False, x4, False, x5, False], 
                [x6, False, False, x7, False]] | [x1, x2, x3, x4, x5, x6, x7] <- prodRepeat [False, True] 7 ]
 
-fWrapper xsss = [[x1, x2, x3, x4, x5] | [[x1, x2, x3, x4, x5]] <- xsss, f x1 x2 x3 x4 == x5]
+fWrapper xsss = [[x1, x2, x3, x4, x5] | xss <- xsss, [x1, x2, x3, x4, x5] <- xss, f x1 x2 x3 x4 == x5]
 
 main :: IO ()
 main = do
-print(fWrapper (allTables))
+print((allTables))
 
 
 {-
-    print([pow 2 x | x <- [0..20], mod x 3 /= 2])
-    print( [x*y | x <- [1..4], y <- [2, 4..8], x*y >= 10] )
     https://www.kompege.ru/task
 -}
