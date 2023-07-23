@@ -20,11 +20,16 @@ allTables = [ [[x1, True, x2, x3, False],
                [False, x4, False, x5, False], 
                [x6, False, False, x7, False]] | [x1, x2, x3, x4, x5, x6, x7] <- prodRepeat [False, True] 7 ]
 
-fWrapper xsss = [[x1, x2, x3, x4, x5] | xss <- xsss, [x1, x2, x3, x4, x5] <- xss, f x1 x2 x3 x4 == x5]
+fWrapper xsss = [x1:x2:x3:x4:x5:[] | xss <- xsss, [x1, x2, x3, x4, x5] <-xss, f x1 x2 x3 x4 == x5]
+
+count x xs = if length xs > 0 then (if x == head xs then 1 + count x (tail xs) else count x (tail xs)) else 0
+
+unique xs = [x | x <- xs, count x xs == 1]
 
 main :: IO ()
 main = do
-print((allTables))
+
+print(fWrapper allTables)
 
 
 {-
