@@ -31,6 +31,7 @@ print(test)
 {-
     print([pow 2 x | x <- [0..20], mod x 3 /= 2])
     print( [x*y | x <- [1..4], y <- [2, 4..8], x*y >= 10] )
+    https://www.kompege.ru/task
 -}
 
 
