@@ -1,1 +1,1 @@
-I am only learning haskell so if i am writing whitty code, please don't blame me
+I am only learning haskell so if i am writing shitty code, please don't blame me
