@@ -19,7 +19,9 @@
 import System.IO  
 import Control.Monad
 import Data.List
+import Prelude
 
+--read file
 f :: [String] -> [Int]
 f = map read 
 
@@ -33,29 +35,44 @@ allDivisors x =
         let d2 = div x d1, 
         mod x d1 == 0 ]
     where n = isqrt x + 1
-    
+
+--max length
 max' ls1 ls2
     | length ls1 < length ls2 = ls2
     | otherwise = ls1
 
+
+--biggest list of divisors 
 bgdvlst [x] = allDivisors x
 bgdvlst (x:ls) = max' (allDivisors x) (bgdvlst ls)
 
-hasxcom ls1 ls2 x = length [y | y <- ls1, y `elem` ls1 && y `elem` ls2] >= x
+--common elements
+comels ls1 ls2 = [y | y <- ls1, y `elem` ls1 && y `elem` ls2] 
 
-pp n1 n2 ngam = 
-    hasxcom d1 ngam 3 && hasxcom d2 ngam 3
-    where d1 = allDivisors n1 
-          d2 = allDivisors n2
-
-process ls = 
+--checks whether a pair has an appropriate amount of common divisors
+driver d1 d2 bgam = 
+    length (comels d1 bgam) >= 3 && 
+    length (comels d2 bgam) >= 3
 
 
-main = do  
-        let list = []
+--processes the data so the task actually works
+process :: [Int] -> (Int, Int)
+process whole@(x:ls) = (length ans, maximum ans)
+    where
+        ans = [length (comels x' y') |   
+            (x, y) <- zip whole ls, 
+            let x' = allDivisors x,
+            let y' = allDivisors y,
+            driver x' y' z']
+        z' = bgdvlst whole
+
+main = do
         handle <- openFile "a.txt" ReadMode
         contents <- hGetContents handle
         let singlewords = words contents
-            list = f singlewords
-        print (pp 6 6 [1, 2, 3, 4, 6, 12])
-        hClose handle   
+        let list = f singlewords
+        print (bgdvlst list)
+        print (process list)
+        hClose handle
+        
+    
